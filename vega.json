@@ -1,0 +1,187 @@
+{
+    "$schema": "https://vega.github.io/schema/vega/v5.json",
+    "autosize": {
+        "type": "fit",
+        "contains": "padding"
+      },
+      "signals": [
+        {
+            "name": "chartWidth",
+            "update": "max(300, containerSize()[0] * 0.9)",
+            "on": [{"events": "window:resize", "update": "max(300, containerSize()[0] * 0.9)"}]
+          },          
+        {
+          "name": "chartHeight",
+          "update": "max(200, containerSize()[1] * 0.8)",
+          "on": [{"events": "window:resize", "update": "max(200, containerSize()[1]) * 0.8"}]
+        }
+      ],
+      "width": {"signal": "chartWidth"},
+      "height": {"signal": "chartHeight"},
+      
+    "padding": 5,
+
+    "data": [
+      {
+        "name": "claims",
+        "source": "claims_data",
+        "transform": [
+            {
+                "type": "formula",
+                "as": "scaled_claims_payment",
+                "expr": "datum.sum_claims_payment"
+            }
+        ]
+      },
+      {
+        "name": "revenue",
+        "source": "revenue_data"
+      },
+      {
+        "name": "loss_ratios",
+        "source": "claims",
+        "transform": [
+            {
+                "type": "lookup",
+                "from": "revenue",
+                "key": "gender",
+                "fields": ["gender"],
+                "values": ["sum_revenue"]
+            },
+            {
+                "type": "formula",
+                "as": "loss_ratio",
+                "expr": "(datum.scaled_claims_payment / datum.sum_revenue) * 100"
+            }
+        ]
+    }
+    
+    ],
+
+    "scales": [
+      {
+        "name": "yscale",
+        "type": "band",
+        "domain": {"data": "claims", "field": "gender"},
+        "range": "height",
+        "padding": 0.2
+      },
+      {
+        "name": "xscale",
+        "type": "linear",
+        "domain": {
+          "fields": [
+            {"data": "claims", "field": "scaled_claims_payment"},
+            {"data": "revenue", "field": "sum_revenue"}
+          ]
+        },
+        "nice": true,
+        "zero": true,
+        "range": "width"
+      }
+    ],
+
+    "axes": [
+      {"orient": "left", "scale": "yscale"},
+      {
+        "orient": "bottom",
+        "scale": "xscale",
+        "format": ".2~s",
+        "formatType": "number"
+      }
+    ],
+
+    "marks": [
+        {
+            "type": "rect",
+            "from": {"data": "revenue"},
+            "encode": {
+                "enter": {
+                    "y": {"scale": "yscale", "field": "gender"},
+                    "height": {"scale": "yscale", "band": 1},
+                    "x": {"scale": "xscale", "value": 0},
+                    "x2": {"scale": "xscale", "signal": "datum.sum_revenue * 0.8"},
+                    "fill": {"value": "#63B590"},
+                    "opacity": {"value": 1}
+
+                },
+                "update": {
+                    "tooltip": {
+                        "signal": "{'Gender': datum.gender, 'Total Revenue': datum.sum_revenue}"
+                    }
+                }                
+            }
+        },
+        {
+            "type": "rect",
+            "from": {"data": "revenue"},
+            "encode": {
+                "enter": {
+                    "y": {"scale": "yscale", "field": "gender"},
+                    "height": {"scale": "yscale", "band": 1},
+                    "x": {"scale": "xscale", "signal": "datum.sum_revenue * 0.8"},
+                    "x2": {"scale": "xscale", "field": "sum_revenue"},
+                    "fill": {"value": "#F27370"},
+                    "opacity": {"value": 1}
+
+                },
+                "update": {
+                    "tooltip": {
+                        "signal": "{'Gender': datum.gender, 'Total Revenue': datum.sum_revenue}"
+                    }
+                } 
+            }
+        },
+        {
+            "type": "rect",
+            "from": {"data": "claims"},
+            "encode": {
+                "enter": {
+                    "y": {
+                        "scale": "yscale",
+                        "field": "gender",
+                        "offset": {"scale": "yscale", "band": 0.3}
+                    },
+                    "height": {"scale": "yscale", "band": 0.4},
+                    "x": {"scale": "xscale", "value": 0},
+                    "x2": {"scale": "xscale", "field": "scaled_claims_payment"},
+                    "fill": {"value": "#8A8A8A"},
+                    "opacity": {"value": 1}
+
+                },
+                "update": {
+                    "tooltip": {
+                        "signal": "{'Gender': datum.gender, 'Total Claims Payment': datum.sum_claims_payment}"
+                    }
+                }
+            }
+        },
+        {
+            "type": "text",
+            "from": {"data": "loss_ratios"},
+            "encode": {
+                "enter": {
+                    "y": {
+                        "scale": "yscale",
+                        "field": "gender",
+                        "offset": {"scale": "yscale", "band": 0.5}  
+                    },
+                    "x": {
+                        "scale": "xscale",
+                        "field": "scaled_claims_payment",
+                        "offset": 10  
+                    },
+                    "text": {
+                        "signal": "format(datum.loss_ratio, '.1f') + '%'"
+                    },
+                    "fill": {"value": "black"},
+                    "align": {"value": "left"},
+                    "baseline": {"value": "middle"},
+                    "fontSize": {"value": 14},
+                    "fontWeight": {"value": "bold"}
+                }
+            }
+        }
+        
+    ]
+}

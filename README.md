@@ -42,4 +42,6 @@ This makes the chart size responsive. It will never be less than 200 px high and
           "on": [{"events": "window:resize", "update": "max(200, containerSize()[1]) * 0.8"}]
         }
       ],
+      "width": {"signal": "chartWidth"},
+      "height": {"signal": "chartHeight"},
 ```

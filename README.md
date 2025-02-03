@@ -23,4 +23,23 @@
 ![image](https://github.com/user-attachments/assets/657a7e3b-19b6-4b6d-a744-039746e5cf59)
 ![image](https://github.com/user-attachments/assets/b78fcd66-7006-4a62-91c4-bed7e7ba6fef)
 
-
+## How to understand the code
+This makes the chart size responsive. It will never be less than 200 px high and 300 px wide. It will scale to 0.8 x container height and 0.9 x container width.
+```
+    "autosize": {
+        "type": "fit",
+        "contains": "padding"
+      },
+      "signals": [
+        {
+            "name": "chartWidth",
+            "update": "max(300, containerSize()[0] * 0.9)",
+            "on": [{"events": "window:resize", "update": "max(300, containerSize()[0] * 0.9)"}]
+          },          
+        {
+          "name": "chartHeight",
+          "update": "max(200, containerSize()[1] * 0.8)",
+          "on": [{"events": "window:resize", "update": "max(200, containerSize()[1]) * 0.8"}]
+        }
+      ],
+```

@@ -9,7 +9,7 @@
 - Revenue hardcoded to highlight "danger zone" with red/green colouring. Can be removed:
   - Green is 80% of revenue
   - Red is 20% of revenue
-- Claims data (CURRENTLY USING WRONG DATA and hardcoded divided by 4 to look reasonable: "expr": "datum.sum_claims_payment / 4")
+- Claims data
   - Shown as grey overlay bar, clearly indicating if claims are in "danger zone" or indeed exceed revenue
   - Loss ratio shown in text at end of claims bar
 

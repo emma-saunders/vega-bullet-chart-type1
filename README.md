@@ -17,8 +17,8 @@
 - Within a Foundry Module, add a Vega Widget (not Vega lite)
 - With the widget selected, scroll to the bottom of the right hand panel, to Editor. Paste the JSON code there.
 - This json schema expects two data sources configured via INPUT DATA (see screenshots)
-  - claims_data grouped by gender
-  - revenue_data grouped by gender
+  - claims_data grouped by gender --> aggregated with sum to sum_claims
+  - revenue_data grouped by gender --> aggregated with sum to sum_revenue
 - You need to select and configure your own claims and revenue data. If you rename these fields (or change the case) you must edit the JSON
 ![image](https://github.com/user-attachments/assets/657a7e3b-19b6-4b6d-a744-039746e5cf59)
 ![image](https://github.com/user-attachments/assets/b78fcd66-7006-4a62-91c4-bed7e7ba6fef)

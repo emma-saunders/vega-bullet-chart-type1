@@ -20,18 +20,10 @@
       "height": {"signal": "chartHeight"},
       
     "padding": 5,
-
     "data": [
       {
         "name": "claims",
-        "source": "claims_data",
-        "transform": [
-            {
-                "type": "formula",
-                "as": "scaled_claims_payment",
-                "expr": "datum.sum_claims_payment"
-            }
-        ]
+        "source": "claims_data"
       },
       {
         "name": "revenue",
@@ -51,7 +43,7 @@
             {
                 "type": "formula",
                 "as": "loss_ratio",
-                "expr": "(datum.scaled_claims_payment / datum.sum_revenue) * 100"
+                "expr": "(datum.sum_claims_payment / datum.sum_revenue) * 100"
             }
         ]
     }
@@ -71,7 +63,7 @@
         "type": "linear",
         "domain": {
           "fields": [
-            {"data": "claims", "field": "scaled_claims_payment"},
+            {"data": "claims", "field": "sum_claims_payment"},
             {"data": "revenue", "field": "sum_revenue"}
           ]
         },
@@ -144,7 +136,7 @@
                     },
                     "height": {"scale": "yscale", "band": 0.4},
                     "x": {"scale": "xscale", "value": 0},
-                    "x2": {"scale": "xscale", "field": "scaled_claims_payment"},
+                    "x2": {"scale": "xscale", "field": "sum_claims_payment"},
                     "fill": {"value": "#8A8A8A"},
                     "opacity": {"value": 1}
 
@@ -168,7 +160,7 @@
                     },
                     "x": {
                         "scale": "xscale",
-                        "field": "scaled_claims_payment",
+                        "field": "sum_claims_payment",
                         "offset": 10  
                     },
                     "text": {

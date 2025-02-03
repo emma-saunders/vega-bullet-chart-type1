@@ -15,7 +15,7 @@
 
 ## How to implement
 - Within a Foundry Module, add a Vega Widget (not Vega lite)
-- With the widget selected, scroll to the bottom of the right hand panel, to Editor. Copy - paste the JSON code there.
+- With the widget selected, scroll to the bottom of the right hand panel, to Editor. Paste the JSON code there.
 - This json schema expects two data sources configured via INPUT DATA (see screenshots)
   - claims_data grouped by gender
   - revenue_data grouped by gender

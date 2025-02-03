@@ -1,6 +1,7 @@
 # vega-bullet-chart-type1
 https://stargate.swissre.com/workspace/module/edit/ri.workshop.main.module.2d0ecc3f-5299-46d8-a695-f32722a02c77
-![image](https://github.com/user-attachments/assets/9cfe8de4-7bb2-4afd-bbef-4af2210ccf30)
+![image](https://github.com/user-attachments/assets/c84c2484-314e-48f6-86c9-3d227fe90195)
+
 
 ## Features
 - Responsive

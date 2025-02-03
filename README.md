@@ -1,4 +1,5 @@
 # vega-bullet-chart-type1
+When you want bullet charts for a single category (here, gender)
 https://stargate.swissre.com/workspace/module/edit/ri.workshop.main.module.c8b5c209-aca4-45cf-afb9-0037bbb4caed
 ![image](https://github.com/user-attachments/assets/c84c2484-314e-48f6-86c9-3d227fe90195)
 

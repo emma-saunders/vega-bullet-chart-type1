@@ -46,3 +46,85 @@ This makes the chart size responsive. It will never be less than 200 px high and
       "width": {"signal": "chartWidth"},
       "height": {"signal": "chartHeight"},
 ```
+The following code specifies the data inputs. The first two, claims_data and revenue_data, must match the INPUT DATA specified in the Vega widget right hand side panel. The third one, loss-ratios, divides claims by revenue and is hardcoded so does not draw upon a separate data source:
+```
+    "data": [
+      {
+        "name": "claims",
+        "source": "claims_data"
+      },
+      {
+        "name": "revenue",
+        "source": "revenue_data"
+      },
+      {
+        "name": "loss_ratios",
+        "source": "claims",
+        "transform": [
+            {
+                "type": "lookup",
+                "from": "revenue",
+                "key": "gender",
+                "fields": ["gender"],
+                "values": ["sum_revenue"]
+            },
+            {
+                "type": "formula",
+                "as": "loss_ratio",
+                "expr": "(datum.sum_claims_payment / datum.sum_revenue) * 100"
+            }
+        ]
+    }
+    
+    ],
+```
+The `marks` section tells the browser where to place the shapes, and how often to repeat them. There are four objects within the marks array:
+- The first object says to add a rect element based on revenue: it should run from an xScaled value of 0 to 0.8 x total revenue and be green
+- The second object says to add a rect element based on revenue: this one should be red and run from 0.8 x revenue to 1 x revenue
+- The third object adds a rect element for claims on top. The order of these objects in the array denotes which is added first, and therefore which can be seen.
+- The final object, a text element, adds the loss ratio at the end of whichever is wider (claims or revenue)
+
+```
+"marks": [
+    {
+        "type": "rect",
+        "from": {"data": "revenue"},
+        "encode": {
+            "enter": { "y": {"scale": "yscale", "field": "gender"}, "height": {"scale": "yscale", "band": 1}, "x": {"scale": "xscale", "value": 0}, "x2": {"scale": "xscale", "signal": "datum.sum_revenue * 0.8"}, "fill": {"value": "#63B590"}, "opacity": {"value": 1} },
+            "update": { "tooltip": {"signal": "{'Gender': datum.gender, 'Total Revenue': datum.sum_revenue}"} }
+        }
+    },
+"marks": [
+    {
+        "type": "rect",
+        "from": {"data": "revenue"},
+        "encode": {
+            "enter": ...,
+            "update": ...
+        }
+    },
+    {
+        "type": "rect",
+        "from": {"data": "revenue"},
+        "encode": {
+            "enter": ...,
+            "update": ...
+        }
+    },
+    {
+        "type": "rect",
+        "from": {"data": "claims"},
+        "encode": {
+            "enter": ...,
+            "update": ...
+        }
+    },
+    {
+        "type": "text",
+        "from": {"data": "loss_ratio"},
+        "encode": {
+            "enter": ...,
+            "update": ...
+        }
+    },
+```

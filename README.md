@@ -23,8 +23,7 @@ https://stargate.swissre.com/workspace/module/edit/ri.workshop.main.module.c8b5c
   - *claims_data* grouped by *gender* --> aggregated with sum to *sum_claims_payment*
   - *revenue_data* grouped by *gender* --> aggregated with sum to *sum_revenue*
 - You need to select and configure your own claims and revenue data. If you rename these fields (or change the case) you must edit the JSON
-![image](https://github.com/user-attachments/assets/657a7e3b-19b6-4b6d-a744-039746e5cf59)
-![image](https://github.com/user-attachments/assets/b78fcd66-7006-4a62-91c4-bed7e7ba6fef)
+(removed images)
 
 ## How to understand the code
 This makes the chart size responsive. It will never be less than 200 px high and 300 px wide. It will scale to 0.8 x container height and 0.9 x container width.
